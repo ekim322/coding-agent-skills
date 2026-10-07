@@ -102,9 +102,25 @@ patterns are evidence, not automatic authority. Add an abstraction when it
 isolates meaningful policy, complexity, or a useful boundary; avoid speculative
 frameworks and pass-through layers.
 
+Before substantially extending a capability, reassess the affected file and
+package boundaries. Earlier structure reflects earlier needs; it is provisional.
+Check whether the added behavior shares an existing responsibility, reveals an
+independent one, or exposes related rules scattered across files. Consider
+keeping, splitting, and regrouping the affected code, rather than automatically
+appending to its current owner or extracting only the newest feature.
+
+Use subpackages when they make a coherent group of responsibilities easier to
+locate and understand. Neither a flat layout nor deeper nesting is the default
+answer to growth; file counts and line counts alone do not justify a restructure.
+Keep changes proportional to the requested work, preserve supported interfaces
+and lifecycle invariants, and report broader improvements separately.
+
 Verify the behavior at the appropriate level, then review the resulting code,
 imports, and package structure. Report the outcome, checks actually run, and
 material limitations without reciting the workflow.
+Review the resulting arrangement as a whole within the affected capability:
+clean methods and individually cohesive files do not establish that related rules
+have the right owners or that the package is easy to navigate.
 
 ## Observability is part of implementation
 

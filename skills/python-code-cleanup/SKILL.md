@@ -58,6 +58,20 @@ report a proposed change separately when it would require a public interface
 change or architectural redesign. Documentation-only requests still permit no
 renames, and a local function cleanup does not imply a package-wide naming audit.
 
+For package- or folder-wide cleanup, reassess the current grouping as well as its
+names. Earlier files may reflect responsibilities that have since grown or
+changed. Check for independent concerns accumulating in one owner, related rules
+scattered across files, and small fragments whose shared context requires needless
+navigation. Clear functions do not by themselves make the overall arrangement
+clear. Compare keeping, splitting, and regrouping the affected code.
+
+When structural cleanup is authorized, split or regroup internal modules and use
+subpackages where they make a coherent responsibility easier to find and follow.
+Neither file size, file count, nor flatness alone justifies a change. A narrow
+function or documentation cleanup does not authorize this restructuring; report
+concrete broader boundary problems separately. Preserve public imports, resource
+and transaction lifetimes, and observable behavior, and verify affected callers.
+
 ## Preserve observability and queryability
 
 Treat operational telemetry as observable behavior during cleanup. Read the repository's observability guide when changing instrumented code, and inspect inherited logging and tracing before adding wrappers. Preserve the evidence needed to identify an execution, reconstruct meaningful events, and locate failures or slow stages.
@@ -159,6 +173,7 @@ Perform a separate editorial pass:
 - Can someone unfamiliar with this package explain the purpose without opening several files?
 - Does the coordinating function show the operation, with machinery below it?
 - Does every extracted helper reduce complexity rather than just move it?
+- For package-wide cleanup, does the resulting grouping localize related rules and make their owners discoverable, rather than merely producing smaller files?
 - Does each documentation sentence explain purpose, enable correct usage, or prevent a real mistake? Remove it otherwise.
 - Are claims supported by implementation, and are important contracts still visible?
 

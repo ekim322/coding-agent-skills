@@ -37,3 +37,27 @@ merge components. Pure transformations and small stateless modules can remain
 functions. An explicit callback can be a sound dependency boundary; passing a
 whole parent object merely to recover its collaborators usually is not. Preserve
 resource and transaction lifetimes when regrouping the implementation.
+
+## Reassess boundaries as a capability grows
+
+A small ingestion implementation might keep listing, reconciliation, downloading,
+revision publication, and retries together. Later work may add several source
+adapters, retention rules, or independently scheduled operations. These are
+hypothetical extensions, not instructions to implement them.
+
+Trace one normal import and one likely change, such as adding another source or
+changing retention. Identify which rules and lifecycle constraints must change
+together. If only pagination machinery obscures a cohesive workflow, private
+methods may suffice. If source access has an independent contract, a source module
+can own it. If revision publication and retention jointly own history rules,
+group them without scattering their transaction invariants. A `sources/`
+subpackage becomes useful when several source-related modules form a coherent
+group; it need not exist for one short adapter.
+
+Compare these arrangements with keeping the current implementation. Select the
+one that reduces the context needed for the actual change, while preserving source
+authorization, revision immutability, retry semantics, and transaction lifetimes.
+Review both the new code and the remaining owner: extracting a feature can leave
+the original component with a misleading mix of responsibilities. Avoid a fixed
+folder tree or a class per operation; regroup existing code when that is the
+clearest scoped correction.

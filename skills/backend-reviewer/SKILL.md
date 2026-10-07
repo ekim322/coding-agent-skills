@@ -44,6 +44,19 @@ another component's data is not by itself entanglement. State what evidence
 would favor keeping the components together; names and example trees are not
 evidence that a boundary is sound.
 
+Treat earlier file and package boundaries as provisional. For a substantial
+extension, assess whether accumulated behavior still fits those boundaries,
+whether related rules have become scattered, and whether new responsibilities
+are hidden inside an original general-purpose owner. Review the whole affected
+capability, not just the added methods or newly extracted files. Compare keeping,
+splitting, and regrouping it using a concrete maintenance change as evidence.
+
+A flat directory can hide coherent groups; nested packages can add navigation
+without clarifying ownership. Recommend grouping when it makes a responsibility
+easier to locate and change, not because a file or directory exceeds a count.
+Identify scoped corrections separately from broader architectural options. This
+assessment does not authorize implementing either.
+
 - **Public surface and package structure:** Assess normal usage and implementation
   navigation separately. Clear exports do not establish clear internal ownership.
   Check that callers can identify how to use the capability and maintainers can
