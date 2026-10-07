@@ -100,24 +100,26 @@ Test the design with a realistic extension: another entry point, source adapter,
 or operation relevant to the product. Trace what would change and why. Use actual
 coupling as evidence; do not invent requirements to justify abstractions.
 
-## Review file and folder names
+## Assess naming and organization
 
-Assess names explicitly alongside the responsibility map. From the directory
-listing and full import paths, can a maintainer locate connection management,
-file listing, or another relevant workflow without opening multiple candidate
-files? Check whether a module's name describes what its implementation owns.
-Common naming practice is supporting context, not proof of clarity.
+Evaluate whether names and package structure reveal both responsibility and any
+component role needed to navigate the code. Use full import paths and actual
+caller and maintainer tasks: can a reader locate an operation and distinguish
+its contract from its implementation without opening several candidate files?
+Familiar conventions do not excuse ambiguity; additional naming detail is useful
+only when it resolves that ambiguity.
 
-Scrutinize generic names such as `service.py`, `provider.py`, `manager.py`, and
-`utils.py`. They can be adequate when package context makes the responsibility
-clear; otherwise identify the obscured responsibility and suggest a concrete
-name. Retain conventional entry-point and configuration names when useful. Do
-not demand verbose names, repeated package context, or a universal folder tree.
+Assess grouping against current responsibilities and maintenance needs. Nesting
+should expose meaningful ownership or reduce navigation and change costs; a flat
+layout should remain understandable as capabilities grow. Challenge both needless
+fragmentation and groupings that have outgrown their original purpose. Do not
+impose a universal directory template or file-count threshold.
 
-Report a naming deficiency when it creates concrete navigation ambiguity, even
-if runtime behavior and internal boundaries are sound. Distinguish a rename from
-a necessary responsibility split: unclear names alone do not justify new layers
-or modules. Account for imports and public compatibility in the suggested fix.
+For a finding, identify the obscured responsibility or role, the concrete
+navigation or change cost, and a scoped correction. Distinguish unclear naming
+from deficient decomposition: a rename may suffice, while a more descriptive
+name cannot repair scattered ownership. Consider affected references and public
+compatibility when recommending structural changes.
 
 ## Examine failure paths
 

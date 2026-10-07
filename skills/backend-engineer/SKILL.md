@@ -46,27 +46,26 @@ component does not establish entanglement. Identify shared machinery separately
 from the capabilities it supports. Choose names after establishing ownership;
 neither an example tree nor a more descriptive name proves a better boundary.
 
-## File and folder naming
+## Naming and package organization
 
-Name packages for the capability they own and modules for the responsibility
-implemented inside them. Assess the full import path and the directory listing:
-a maintainer should be able to locate a workflow without opening several vaguely
-named files. Common usage alone does not justify a name.
+Choose names that communicate purpose and, where needed, component role. Read
+names in the context of their full import paths: maintainers should be able to
+locate behavior and distinguish interfaces, data definitions, integrations, and
+application logic without inspecting multiple candidate files. Prefer domain
+language and meaningful roles over vague technical categories or implementation
+details. Familiar conventions are useful when they make the responsibility clear.
 
-Names such as `service.py`, `provider.py`, `manager.py`, and `utils.py` need scrutiny
-because they describe a technical category rather than a responsibility. Prefer
-concrete names when they improve discovery: a module owning Drive connection
-lifecycle might be `connections.py`; a module listing Drive files might be
-`drive_files.py`. These are examples, not a required tree. Keep conventional names
-such as `main.py` or `config.py` when their purpose is clear, and avoid repeating
-package context unless it adds useful precision.
+Let package structure follow cohesive responsibilities and useful boundaries.
+Add nesting when it exposes a meaningful group or simplifies navigation and
+change; keep the arrangement flat when nesting would only add indirection.
+Neither a uniform layer template nor a descriptive filename establishes good
+ownership. Naming and decomposition are separate decisions.
 
-A naming problem does not automatically require splitting a module. Establish
-its actual responsibility, then choose a clearer name or change the boundary only
-when cohesion warrants it. Before renaming, check imports, entry points, and
-string-based references; preserve compatibility where required. Include naming
-and discoverability in the final structural review, rather than assuming good
-internal code makes the directory understandable.
+Reassess names and grouping as responsibilities evolve. Base renaming, splitting,
+consolidation, or new subpackages on actual caller needs and maintenance friction,
+not speculative growth or attachment to the initial layout. Keep changes within
+scope, check affected references, and preserve supported interfaces. Include
+naming and discoverability when reviewing the resulting structure.
 
 ## Method readability
 
