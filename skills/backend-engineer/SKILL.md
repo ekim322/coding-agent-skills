@@ -46,6 +46,28 @@ component does not establish entanglement. Identify shared machinery separately
 from the capabilities it supports. Choose names after establishing ownership;
 neither an example tree nor a more descriptive name proves a better boundary.
 
+## File and folder naming
+
+Name packages for the capability they own and modules for the responsibility
+implemented inside them. Assess the full import path and the directory listing:
+a maintainer should be able to locate a workflow without opening several vaguely
+named files. Common usage alone does not justify a name.
+
+Names such as `service.py`, `provider.py`, `manager.py`, and `utils.py` need scrutiny
+because they describe a technical category rather than a responsibility. Prefer
+concrete names when they improve discovery: a module owning Drive connection
+lifecycle might be `connections.py`; a module listing Drive files might be
+`drive_files.py`. These are examples, not a required tree. Keep conventional names
+such as `main.py` or `config.py` when their purpose is clear, and avoid repeating
+package context unless it adds useful precision.
+
+A naming problem does not automatically require splitting a module. Establish
+its actual responsibility, then choose a clearer name or change the boundary only
+when cohesion warrants it. Before renaming, check imports, entry points, and
+string-based references; preserve compatibility where required. Include naming
+and discoverability in the final structural review, rather than assuming good
+internal code makes the directory understandable.
+
 ## Method readability
 
 Keep public operations at the level of the business workflow. Extract substantial

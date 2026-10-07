@@ -87,6 +87,25 @@ Test the design with a realistic extension: another entry point, source adapter,
 or operation relevant to the product. Trace what would change and why. Use actual
 coupling as evidence; do not invent requirements to justify abstractions.
 
+## Review file and folder names
+
+Assess names explicitly alongside the responsibility map. From the directory
+listing and full import paths, can a maintainer locate connection management,
+file listing, or another relevant workflow without opening multiple candidate
+files? Check whether a module's name describes what its implementation owns.
+Common naming practice is supporting context, not proof of clarity.
+
+Scrutinize generic names such as `service.py`, `provider.py`, `manager.py`, and
+`utils.py`. They can be adequate when package context makes the responsibility
+clear; otherwise identify the obscured responsibility and suggest a concrete
+name. Retain conventional entry-point and configuration names when useful. Do
+not demand verbose names, repeated package context, or a universal folder tree.
+
+Report a naming deficiency when it creates concrete navigation ambiguity, even
+if runtime behavior and internal boundaries are sound. Distinguish a rename from
+a necessary responsibility split: unclear names alone do not justify new layers
+or modules. Account for imports and public compatibility in the suggested fix.
+
 ## Examine failure paths
 
 Check the relevant risks: authorization and tenant isolation, mismatched validation

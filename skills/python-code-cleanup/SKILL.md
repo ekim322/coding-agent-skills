@@ -39,6 +39,25 @@ The reader can understand event discovery followed by transcript retrieval witho
 
 After extraction, read the coordinating method alone. It should explain the workflow. Then read each helper: it should have a useful responsibility that justifies opening another function.
 
+## Make file and folder responsibilities discoverable
+
+For package- or folder-wide readability cleanup, assess module and package names
+as well as names inside functions. A reader should be able to locate an operation
+from the directory listing and full import path. Scrutinize generic names such as
+`service.py`, `provider.py`, `manager.py`, and `utils.py`; prefer the actual subject
+and responsibility when that improves discovery. Common usage alone does not
+establish clarity. Keep conventional names when their purpose is evident, and
+avoid needless repetition of the containing package name.
+
+Establish what a module owns before proposing a rename. For example, a module
+listing Drive files could be named `drive_files.py` rather than `provider.py`.
+A clearer filename does not require splitting cohesive code or adding layers.
+Apply internal renames within the authorized cleanup scope after checking imports,
+entry points, and string-based references. Preserve supported public import paths;
+report a proposed change separately when it would require a public interface
+change or architectural redesign. Documentation-only requests still permit no
+renames, and a local function cleanup does not imply a package-wide naming audit.
+
 ## Preserve observability and queryability
 
 Treat operational telemetry as observable behavior during cleanup. Read the repository's observability guide when changing instrumented code, and inspect inherited logging and tracing before adding wrappers. Preserve the evidence needed to identify an execution, reconstruct meaningful events, and locate failures or slow stages.
