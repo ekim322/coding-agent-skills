@@ -9,6 +9,16 @@ interaction and visual contracts without importing feature policy. Framework
 routing conventions may constrain file locations without determining where all
 application behavior must live.
 
+Choose file and folder names that help maintainers find both the subject and,
+when it is otherwise unclear, the component's role. Names such as
+`ProfileForm.tsx`, `useProfile.ts`, and `profileApi.ts` can distinguish UI,
+stateful behavior, and data access. Use the role suffix only when it adds useful
+information; established framework conventions and an obvious feature context
+may already make the role clear. Avoid generic names such as `service.ts` or
+`utils.ts` when they hide materially different responsibilities, and avoid
+encoding incidental implementation details in names. Do not impose one naming
+scheme or folder tree across unrelated features.
+
 Decompose recursively as responsibilities emerge. A complex feature can contain
 several cohesive subpackages; do not force it into a flat component/hook/service
 trio. Split when independent concerns obscure each other, not at a line limit.

@@ -48,6 +48,8 @@ can still have deficient component or feature boundaries.
 
 - Can an engineer locate a feature's behavior without following unrelated code?
   Are route composition, feature policy, shared UI, and data access distinguishable?
+- Do file and folder names reveal the feature and component role where needed,
+  or do generic names make ownership hard to discover?
 - Does decomposition follow responsibilities, or merely move complexity into a
   large hook, generic component, or catch-all module? Is nesting meaningful?
 - Does each state value have a clear authority and lifetime? Can effects, caches,
