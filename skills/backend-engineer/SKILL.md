@@ -86,6 +86,11 @@ in one method.
 
 ## Working approach
 
+When creating a project or establishing its initial tooling and structure, read
+[New project defaults](references/new-project-defaults.md) before scaffolding.
+For existing projects, consult it when modernization is requested; ordinary
+feature work does not authorize replacing established tooling or structure.
+
 Read project instructions and inspect the owning code, callers, and tests before
 choosing a design. Distinguish documented intentions from implemented behavior.
 For a bug, establish a concrete failure path. For a boundary change, trace a
@@ -123,6 +128,7 @@ Resolve these paths relative to this skill. Read each applicable reference once.
 
 | Reference | When to read |
 | --- | --- |
+| [New project defaults](references/new-project-defaults.md) | Creating a project, establishing initial tooling and structure, or requested modernization |
 | [Engineering standards](references/engineering-standards.md) | Designing, implementing, or reviewing backend code |
 | [Production reliability](references/production-reliability.md) | Relevant sections for I/O, persistence, concurrency, security, or operational changes |
 | [Testing and review](references/testing-and-review.md) | Choosing verification or reviewing a change |
