@@ -46,8 +46,15 @@ Inspect the resulting package tree, imports, state flow, and affected consumers,
 not only the diff. Compare actual ownership with project intent. A working screen
 can still have deficient component or feature boundaries.
 
-- Can an engineer locate a feature's behavior without following unrelated code?
-  Are route composition, feature policy, shared UI, and data access distinguishable?
+- Can an engineer find a destination such as sign-in or Documents from its
+  screen name, then identify its page entry point and capability owner? Is a
+  full screen distinguishable from a form or reusable panel in the file listing?
+- Are application shell, page composition, feature policy, shared UI and transport
+  distinguishable? Does each boundary own a real responsibility rather than
+  forwarding props or hiding unrelated behavior?
+- Trace a second consumer or realistic extension through the final structure.
+  Does reusable feature code stay with its owner, and can page composition change
+  without duplicating rules or making features import their consuming pages?
 - Do file and folder names reveal the feature and component role where needed,
   or do generic names make ownership hard to discover?
 - Does decomposition follow responsibilities, or merely move complexity into a
@@ -58,6 +65,9 @@ can still have deficient component or feature boundaries.
   shared change preserve its other consumers and interaction contracts?
 - Can users complete the journey across relevant failure states and input methods?
   Could a wrapper, effect, state variable, or dependency be removed safely?
+- Do complex components and hooks explain purpose, handoffs and essential lifecycle
+  or recovery contracts? Are comments supported by implemented behavior and useful
+  to a newcomer, rather than narrating JSX or repeating names?
 
 Support structural findings with concrete ownership/dependency evidence and name
 the intended correction. Do not endorse architecture solely because tests pass.

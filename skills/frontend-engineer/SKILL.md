@@ -28,6 +28,13 @@ Reason from the user journey to ownership, then to code structure:
 - **Contracts:** What props, events, state transitions, and loading/failure
   outcomes must remain coherent as the user interacts with the application?
 
+Prefer capability-owned implementation with explicit page entry points and a
+separate application shell. A page composes a destination; a feature owns a
+capability; the shell connects destinations and shared application lifetimes.
+These are distinct responsibilities, not a mandatory folder hierarchy. Follow
+[engineering standards](references/engineering-standards.md) to choose their
+placement and names before creating files.
+
 Neither flat files nor deep nesting are a goal. Make the real responsibilities
 visible without turning every component into a framework.
 
@@ -36,8 +43,10 @@ visible without turning every component into a framework.
 Read project instructions, product/design context, installed framework versions,
 and the owning code, callers, and tests. Trace the relevant user journey and its
 state/data flow. Reproduce a bug or establish a concrete failure path. For a
-substantial change, briefly identify owners and boundaries; local fixes need no
-architecture report.
+substantial change, map each affected destination to its page entry point,
+capability owners, state/data/style owners and dependency direction before editing.
+For new screens, make the destination discoverable from the file listing even
+when its capability name is unfamiliar. Local fixes need no architecture report.
 
 Implement a coherent change within scope. Existing patterns are evidence to
 assess, not automatic authority. Reuse sound design-system and framework
@@ -47,7 +56,9 @@ parallel state systems, and unrelated dependency upgrades.
 For rendered UI or browser behavior changes, exercise the affected journey with
 available authorized browser tooling. Inspect relevant visual and interaction
 states, console output, and network failures. Run appropriate repository checks,
-then review both the resulting structure and behavior.
+then review both the resulting structure and behavior. Check navigation from a
+user-facing screen name as well as from a capability name; clearer internal
+ownership alone does not establish that page entry points are easy to find.
 
 Report what changed, checks actually run, and material limitations. Distinguish
 compilation, mocked tests, browser inspection, and real integration evidence.

@@ -2,12 +2,62 @@
 
 ## Structure follows responsibility
 
-Organize application behavior by feature. Keep feature-specific UI, state logic,
-data adapters, and styles discoverable together. Route entry points compose
-features and handle navigation/framework integration; reusable UI primitives own
-interaction and visual contracts without importing feature policy. Framework
-routing conventions may constrain file locations without determining where all
-application behavior must live.
+Prefer grouping implementation by capability, while making screen entry points
+explicit. Choose ownership before choosing directories:
+
+| Responsibility | Owns | Placement guidance |
+| --- | --- | --- |
+| Application shell | Navigation, route selection, shared layout, session gates and application-wide lifetimes | An application boundary such as `app/`, or the established framework entry points |
+| Page | Composition of one destination and screen-specific coordination | Inside its owning feature when that feature owns the screen; a page/route layer when several independent features are composed or the framework requires it |
+| Feature | A coherent capability's UI, state, data contracts, requests and rules | Together under a meaningful capability name, with subpackages as responsibilities emerge |
+| Shared UI | Reusable visual and interaction contracts | The existing UI/design-system boundary, with no feature policy |
+| Shared transport | Common HTTP/session/error mechanics | A transport boundary; feature schemas and rules remain with their feature |
+
+A page can use multiple features, and a feature can serve multiple pages. Folder
+containment need not mirror the rendered component tree. Do not organize reusable
+capabilities beneath whichever page first happened to use them.
+
+For a screen clearly owned by one capability, keep its page entry point alongside
+that capability. For example, `accounts/AuthenticationPage.tsx` can own a shared
+sign-in/sign-up screen, and `accounts/AccountSettingsPage.tsx` can use the same
+Google identity component. Separate sign-in and sign-up implementations when their
+workflows actually diverge; a mode switch in one shared form does not require two
+folders. An `accounts/` umbrella is useful only while its responsibilities remain
+coherent and its screen names remain discoverable.
+
+For a screen composing independent capabilities, place composition in the
+application's page/route layer. For example, a briefing page can arrange watchlist
+updates, document findings and recent chats, while those capabilities retain their
+own behavior and data contracts. Compose cross-feature workflows at the appropriate
+page or application boundary rather than making one feature own unrelated policy.
+
+Framework routing conventions take precedence over arbitrary file naming. Keep
+framework route files focused on their routing/composition responsibilities and
+keep reusable capability implementation with its owner. A required route entry
+may delegate to a feature screen; do not add an extra page wrapper that merely
+forwards props when an existing component already supplies the entry point.
+
+For authored full-screen components, prefer explicit names such as
+`AuthenticationPage` and `DocumentsPage` when they clarify the role. Keep a
+framework's established `page.tsx` or equivalent convention when it already
+identifies that role. Components such as `SignInForm`, `DocumentLibrary` and
+`GoogleSignInButton` should advertise their actual scope rather than claiming to
+be a page. Apply naming corrections within the authorized scope; this guidance
+does not require renaming unaffected screens during a local fix.
+
+Check dependency direction: application/page composition consumes feature
+interfaces; reusable features do not import their consuming pages or shell.
+Features can use another capability through a deliberate contract when the
+collaboration has a coherent purpose. Shared UI and transport do not import
+feature rules. Do not require an `index.ts`, facade or adapter for every file;
+introduce an interface where it reduces what consumers need to know.
+
+Before settling the structure, trace a realistic change through it: add a second
+screen using an existing form, show document selection inside chat, or add a
+preview format. Identify which owner changes and which caller composes it. Check
+both whether a maintainer can find a screen by its user-facing purpose and whether
+related behavior can be changed without searching unrelated folders. Use this
+exercise to challenge both excessive nesting and catch-all feature packages.
 
 Choose file and folder names that help maintainers find both the subject and,
 when it is otherwise unclear, the component's role. Names such as
@@ -47,6 +97,31 @@ synchronizing duplicate state through effects. Declare dependencies honestly and
 clean up listeners, timers, observers, subscriptions, and obsolete requests.
 Repeated setup/cleanup must be safe. Use stable identity for list keys and make
 state preservation or reset intentional when an entity or route changes.
+
+## Make workflows and documentation readable
+
+Let a coordinating component or hook expose the operation's meaningful steps.
+Extract request sequencing, stream synchronization, parsing or resource cleanup
+when it hides that flow. Keep simple expressions inline. Helpers should name a
+real responsibility and reduce reasoning, rather than relocate arbitrary lines.
+Use explicit branches or named intermediate values when nested conditionals
+obscure a decision. Preserve request order, cancellation, retries, cache
+invalidation, event application and resource/focus lifetimes during extraction.
+
+Document substantial page, feature and hook contracts in plain language. Lead
+with what the caller or user can accomplish, then explain handoffs and lifecycle
+or failure behavior needed for correct use. Mention inputs, outputs and side
+effects when they clarify the contract; do not inventory props or collaborators.
+For example, an upload hook may need to explain sequential acceptance, retained
+partial success and what cancellation can still stop. Verify such claims against
+implementation rather than copying intended guarantees from a design document.
+
+Use nearby comments to explain surprising choices such as a stable retry ID,
+disabled snapshot refresh during streaming, or an intentional focus fallback.
+Avoid narrating obvious JSX, adding boilerplate JSDoc to every component, or
+repeating the same explanation across the page, hook and helper. After editing,
+read the coordinator alone, then each extracted owner: the flow and documentation
+should be understandable without reconstructing the whole feature.
 
 ## State needs an authority and a lifetime
 
