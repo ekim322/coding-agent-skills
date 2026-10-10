@@ -96,6 +96,19 @@ For a bug, establish a concrete failure path. For a boundary change, trace a
 representative caller through the proposed components and explain what each
 boundary lets that caller stop knowing. A local fix needs no architecture report.
 
+Treat the request as an expression of the intended user outcome. Before
+implementing, infer the ordinary behaviors needed to make that outcome complete
+from product context, existing workflows, and established conventions. Consider
+related entities, lifecycle transitions, and interactions with existing automation
+where they affect the requested capability. Identify observable acceptance cases
+before choosing an implementation, including relevant sequences of actions.
+
+Implement necessary supporting behavior within the authorized scope without
+requiring the user to enumerate routine engineering decisions. Honor explicit
+constraints and exclusions. Ask about materially ambiguous product choices;
+distinguish those from ordinary expectations and optional enhancements. Keep
+inferences grounded in the actual product rather than adding speculative features.
+
 Implement a coherent change within scope, preserving unrelated work. Existing
 patterns are evidence, not automatic authority. Add an abstraction when it
 isolates meaningful policy, complexity, or a useful boundary; avoid speculative

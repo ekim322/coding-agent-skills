@@ -48,6 +48,19 @@ capability owners, state/data/style owners and dependency direction before editi
 For new screens, make the destination discoverable from the file listing even
 when its capability name is unfamiliar. Local fixes need no architecture report.
 
+Treat the request as an expression of the intended user outcome. Before
+implementing, infer the ordinary behaviors needed to make that outcome complete
+from product context, existing workflows, and established conventions. Consider
+related entities, lifecycle transitions, and interactions with existing automation
+where they affect the requested capability. Identify observable acceptance cases
+before choosing an implementation, including relevant sequences of actions.
+
+Implement necessary supporting behavior within the authorized scope without
+requiring the user to enumerate routine engineering decisions. Honor explicit
+constraints and exclusions. Ask about materially ambiguous product choices;
+distinguish those from ordinary expectations and optional enhancements. Keep
+inferences grounded in the actual product rather than adding speculative features.
+
 Implement a coherent change within scope. Existing patterns are evidence to
 assess, not automatic authority. Reuse sound design-system and framework
 conventions; explain necessary departures. Avoid speculative abstractions,

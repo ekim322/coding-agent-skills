@@ -7,6 +7,14 @@ for rules and transformations, HTTP tests for request/response contracts, databa
 integration tests for storage semantics, and workflow tests for coordination and
 recovery. Follow project verification requirements and scale checks to the change.
 
+Derive acceptance cases from the intended workflow and its contracts before
+choosing tests. Include relevant sequences and interactions with existing jobs or
+integrations: an operation may work in isolation yet prevent a subsequent ordinary
+action, such as adding a source again after removing it. Check that neighboring
+workflows still preserve their invariants. Scale coverage to the actual risk;
+passing tests for a narrowly chosen implementation does not establish that the
+requested capability is complete.
+
 - For a bug, establish the failure and add a regression test when practical.
   Assert outcomes and invariants rather than helper structure or file layout.
 - Mock external boundaries, not the internal behavior under test. Fakes do not

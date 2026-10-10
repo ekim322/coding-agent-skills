@@ -8,6 +8,14 @@ mutations, and browser tests for navigation and critical journeys. Follow projec
 requirements and use existing tools. Cosmetic changes need targeted inspection,
 not new tests that mirror the edit.
 
+Derive acceptance cases from the intended user journey before choosing tests.
+Include the ordinary next actions and related entities needed to complete that
+journey, plus relevant recovery or return paths. Exercise sequences of actions
+where isolated interactions can pass while the overall workflow breaks. Check
+that neighboring workflows remain usable. Scale coverage to the actual risk;
+passing tests for a narrowly chosen implementation does not establish that the
+requested feature is complete.
+
 Assert user-visible outcomes and meaningful invariants through roles, labels,
 and public contracts. Avoid private-state assertions, arbitrary sleeps, and
 snapshots coupled to incidental markup. Control response timing and failures

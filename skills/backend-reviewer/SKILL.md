@@ -32,6 +32,20 @@ passed objects; imports alone can hide coupling. Derive intended ownership from
 requirements and usage, then compare it with the implementation. A filename is
 not proof of responsibility. Respect excluded areas and identify review limits.
 
+## Assess feature completeness
+
+Independently derive the expected outcome from the request, product context,
+existing workflows, and established conventions. Check whether the implementation
+supports the ordinary behaviors necessary for that outcome, including relevant
+related entities, lifecycle transitions, subsequent actions, and interactions with
+automation. The implementer's chosen scope and test cases are evidence to assess;
+they do not establish the full acceptance contract.
+
+Identify missing behavior with a concrete user or caller sequence and its product
+basis. Distinguish necessary supporting behavior from ambiguous product choices
+and optional enhancements. Honor explicit exclusions and avoid inventing features
+to manufacture findings. Passing tests can leave workflow omissions undetected.
+
 ## Challenge the boundaries
 
 Use these criteria alongside explicit project requirements. Explain departures
