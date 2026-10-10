@@ -41,6 +41,14 @@ Provide short, documented commands for setup, running the application, checking
 it, and applying formatting. A Makefile is a reasonable default when supported
 by the target environment; use an equivalent runner when that fits better.
 
+For a Make-based full-stack project, make `dev` the normal live-development
+command: start the full stack, reload the backend when source changes, and use
+the frontend's hot-update mode. Let `make backend` and `make frontend` run their
+respective components with reload enabled by default. If a captured build is
+useful, offer it separately as `make dev-stable` and explain that edits require
+a restart. Avoid a redundant `dev-reload` target when `dev` already follows
+source changes. Preserve explicit project and user choices when they differ.
+
 The run command starts all locally required processes, including workers when
 present. Handle readiness, useful startup errors, sibling failures, and clean
 shutdown of owned processes. Avoid requiring users to discover individual module
