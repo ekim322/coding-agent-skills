@@ -32,7 +32,7 @@ The reader can understand event discovery followed by transcript retrieval witho
 - Extract based on responsibility, not a line-count limit. A long cohesive function may be clearer than several fragments.
 - Keep simple, readable operations inline. Do not turn result construction or one obvious expression into a helper merely to make the caller shorter.
 - Name helpers for the operation and its subject. Avoid vague names such as `_process`, `_handle_data`, or `_finalize_result`.
-- Do not introduce classes, generic frameworks, new modules, or chains of wrappers just to tidy one method. Prefer the smallest structure that makes the work clear.
+- For a local method cleanup, avoid introducing a class, generic framework, new module, or chain of wrappers merely to shorten the method. For broader cleanup, choose ownership using the cohesion and discovery criteria below. Prefer the smallest structure that makes the work clear.
 - Make inputs, outputs, and meaningful side effects evident. Avoid helpers that depend on hidden mutable state or return many unrelated values.
 - Keep consequential decisions visible at the appropriate level: partial results, early exits, recovery policy, and authorization should not disappear behind an innocuous name.
 - Preserve call ordering, batching, concurrency, resource ownership, cancellation, exceptions, retry behavior, and result ordering. Moving code across a `try`, lock, transaction, or async context boundary can change behavior.
@@ -64,6 +64,21 @@ changed. Check for independent concerns accumulating in one owner, related rules
 scattered across files, and small fragments whose shared context requires needless
 navigation. Clear functions do not by themselves make the overall arrangement
 clear. Compare keeping, splitting, and regrouping the affected code.
+
+When related operations form one caller-facing capability, explicitly compare a
+cohesive class with module-level functions. Statelessness alone does not favor
+functions: a class can own related operations, shared rules, and dependencies
+without mutable state. Functions suit operations that are independently
+understandable and discoverable. Choose the arrangement that makes the available
+operations and their common responsibility easiest to find and follow.
+
+Assess caller usage and implementation navigation separately. A single exported
+entry point can make usage clear while leaving maintainers to search several
+files for its operations. Keep related implementation methods together when they
+share one responsibility; retain separate modules when their distinct concerns
+justify the navigation. Avoid a class that merely forwards to the same scattered
+functions without improving ownership. Preserve supported public entry points
+when changing internal organization.
 
 When structural cleanup is authorized, split or regroup internal modules and use
 subpackages where they make a coherent responsibility easier to find and follow.
@@ -177,4 +192,4 @@ Perform a separate editorial pass:
 - Does each documentation sentence explain purpose, enable correct usage, or prevent a real mistake? Remove it otherwise.
 - Are claims supported by implementation, and are important contracts still visible?
 
-Complete the requested edits. Finish with a concise summary of the improvements, verification, and limitations. Include a few short before-and-after examples when they help demonstrate a broad cleanup.
+Complete the requested edits. Finish with a concise summary of the improvements, verification, and limitations. For folder-wide cleanup, briefly report the grouping alternatives considered and why the chosen ownership improves discovery, or why the existing grouping remains appropriate. Distinguish implementation changes from documentation and test changes; passing checks verifies behavior preservation, not readability. Include a few short before-and-after examples when they help demonstrate a broad cleanup.
