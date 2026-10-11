@@ -80,6 +80,19 @@ justify the navigation. Avoid a class that merely forwards to the same scattered
 functions without improving ownership. Preserve supported public entry points
 when changing internal organization.
 
+For package-wide cleanup, inspect caller wiring as part of readability. Repeated
+construction of internal collaborators, dependencies supplied alongside objects
+that already own them, and stable dependencies passed through related operations
+can force readers to reconstruct a capability's internals. Distinguish legitimate
+explicit dependency injection from exposed assembly or misplaced workflow
+coordination. When structural changes are authorized, consider binding shared
+dependencies in a cohesive service and assembling its collaborators in a
+designated setup location; keep operation-specific inputs at method calls.
+Preserve resource and transaction lifetimes, and avoid hidden globals or a facade
+that only relocates forwarding calls. If the correction exceeds cleanup scope or
+changes supported interfaces, report the concrete concern and proposed owner
+instead of implementing it.
+
 When structural cleanup is authorized, split or regroup internal modules and use
 subpackages where they make a coherent responsibility easier to find and follow.
 Neither file size, file count, nor flatness alone justifies a change. A narrow

@@ -80,9 +80,30 @@ for missing configuration. Keep secrets out of committed examples and output.
 
 Consider Docker Compose when it simplifies a multi-service application or makes
 its environment reproducible. It is optional, not a requirement for every Python
-backend. If chosen, provide a simple run command, development reload where useful,
-health checks for readiness dependencies, persistent storage, and graceful
-shutdown. Make stop and destructive reset behavior clearly different.
+backend. If chosen:
+
+- Define the local stack in a root `compose.yaml`, with a Dockerfile for each
+  application image. Keep build contexts small with `.dockerignore`; install
+  runtime dependencies in the image instead of relying on tools installed on the
+  developer's host.
+- Provide one normal command to start the complete development stack and one to
+  stop it. Compose should own the services so users do not need to coordinate
+  separate host processes or terminals. Use source bind mounts and reload only
+  for development; keep production images independent of the checkout.
+- Make service readiness explicit. A dependency's startup order alone does not
+  mean it can accept requests: use health checks and `depends_on` conditions
+  such as `service_healthy`, and run one-shot setup jobs such as migrations with
+  `service_completed_successfully` when appropriate.
+- Choose persistence deliberately and make every durable location visible.
+  Named volumes are managed by Docker; bind mounts are directories in the
+  checkout or another host path. State which data each holds and how to back it
+  up. A normal `compose down` should stop and remove services while preserving
+  data. Put volume removal and deletion of bind-mounted data behind a clearly
+  named, explicitly destructive reset command.
+- Keep development and deployment settings distinct. Development bind mounts,
+  reload servers, and local-only settings should not leak into production. Use a
+  production override or deployment configuration when needed, based on the
+  selected hosting target.
 
 Choose databases, queues, and other services for actual requirements. Do not add
 Redis, Kubernetes, a new database, or telemetry vendors just to complete a generic
@@ -106,4 +127,7 @@ Consult the relevant current documentation when applying these defaults:
 - [uv locking and syncing](https://docs.astral.sh/uv/concepts/projects/sync/)
 - [Ruff](https://docs.astral.sh/ruff/)
 - [FastAPI lifespan](https://fastapi.tiangolo.com/advanced/events/)
-- [Compose startup and readiness](https://docs.docker.com/compose/how-tos/startup-order/)
+- [Docker build best practices](https://docs.docker.com/build/building/best-practices/)
+- [Docker Compose startup and readiness](https://docs.docker.com/compose/how-tos/startup-order/)
+- [Docker Compose in production](https://docs.docker.com/compose/how-tos/production/)
+- [Docker storage volumes](https://docs.docker.com/engine/storage/volumes/)

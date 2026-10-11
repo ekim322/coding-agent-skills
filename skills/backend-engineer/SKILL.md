@@ -38,6 +38,20 @@ should distinguish the supported interface from the implementation behind it.
 Prefer the smallest design that makes both normal use and a likely change easy
 to follow; judge the whole arrangement, not each extraction in isolation.
 
+Inspect how callers obtain and use the capability. Keep dependency injection
+explicit, but assemble internal collaborators in a designated setup location,
+such as a FastAPI dependency provider or application startup. Routes should
+translate HTTP inputs and outputs and invoke an application operation; source
+selection and workflow coordination belong to the capability that owns them.
+Look for callers repeatedly constructing related collaborators, supplying a
+dependency alongside objects that already own it, or passing the same stable
+dependencies through several operations. Where this exposes internal choices,
+prefer a cohesive service that binds its dependencies at construction and accepts
+operation-specific inputs in its methods. Preserve request, client, transaction,
+and cleanup lifetimes when moving construction. Multiple injected collaborators
+are valid when the caller genuinely owns their coordination; do not consolidate
+by argument count or add a service that only forwards calls.
+
 For a structural decision with plausible alternatives, compare keeping the
 current grouping with grouping by caller purpose or shared mechanism. Use actual
 operations, invariants, and likely changes to explain why one fits. Reading the

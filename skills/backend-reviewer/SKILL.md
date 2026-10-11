@@ -82,6 +82,18 @@ assessment does not authorize implementing either.
   endpoint area. Application processing belongs in its capability package.
   Placement and handler contents must both respect that boundary. Shared HTTP
   dependencies should not require another feature's endpoint module.
+- **Caller wiring and service ownership:** Trace construction as well as method
+  calls. Check whether routes or other callers assemble a capability's internal
+  collaborators, supply dependencies already owned by those collaborators, pass
+  stable dependencies repeatedly, or choose implementation paths that belong to
+  application policy. Establish the exposed knowledge or repeated setup before
+  flagging a finding. Where justified, recommend a cohesive service interface
+  with explicit constructor dependencies and assembly in a designated setup
+  location, such as a FastAPI dependency provider or application startup. Verify
+  that the proposed owner absorbs actual coordination and preserves resource,
+  request, and transaction lifetimes. Ordinary dependency injection and multiple
+  collaborators are not defects; do not prescribe consolidation by argument
+  count, hidden globals, or forwarding-only facades.
 - **Cohesion and decomposition:** Evaluate which operations share a purpose,
   dependencies, invariants, and lifetime. Their grouping should localize reasoning
   and change. Classes can express this cohesion without mutable state; functions
